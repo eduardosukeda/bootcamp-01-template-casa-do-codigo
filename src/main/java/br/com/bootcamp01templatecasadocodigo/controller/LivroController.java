@@ -1,5 +1,6 @@
 package br.com.bootcamp01templatecasadocodigo.controller;
 
+import br.com.bootcamp01templatecasadocodigo.dto.DetalheLivroDTO;
 import br.com.bootcamp01templatecasadocodigo.dto.LivroDTO;
 import br.com.bootcamp01templatecasadocodigo.service.LivroService;
 import org.springframework.http.ResponseEntity;
@@ -26,5 +27,16 @@ public class LivroController {
     @GetMapping
     public ResponseEntity<List<LivroDTO>> findAll() {
         return ResponseEntity.ok(livroService.findAll());
+    }
+
+    @GetMapping({"id"})
+    public ResponseEntity<?> findOne(Integer id) {
+        DetalheLivroDTO detalheLivroDTO = livroService.findLivroById(id);
+
+        if (detalheLivroDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(detalheLivroDTO);
     }
 }

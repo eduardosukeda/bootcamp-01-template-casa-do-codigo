@@ -1,5 +1,7 @@
 package br.com.bootcamp01templatecasadocodigo.service.impl;
 
+import br.com.bootcamp01templatecasadocodigo.dto.DetalheAutorDTO;
+import br.com.bootcamp01templatecasadocodigo.dto.DetalheLivroDTO;
 import br.com.bootcamp01templatecasadocodigo.dto.LivroDTO;
 import br.com.bootcamp01templatecasadocodigo.entity.Livro;
 import br.com.bootcamp01templatecasadocodigo.repository.AutorRepository;
@@ -10,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class LivroServiceImpl implements LivroService {
@@ -43,5 +44,12 @@ public class LivroServiceImpl implements LivroService {
         }
 
         return livrosDTO;
+    }
+
+    @Override
+    public DetalheLivroDTO findLivroById(Integer id) {
+        Livro livro = livroRepository.findLivroById(id);
+
+        return new DetalheLivroDTO(new DetalheAutorDTO(livro.getAutor().getNome(), livro.getAutor().getDescricao()), livro);
     }
 }
